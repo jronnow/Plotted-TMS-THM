@@ -1,0 +1,27 @@
+I'll include this first Quality of Life step because a lot of writeups don't, and it took me a while to learn it. Once you have the machine IP, run:
+
+export TARGET=[machine IP]
+
+It'll save you a lot of annoying 10-key entry later. Anyway, let's run an nmap scan.
+
+nmap -vvvv -A -p- -T5 $TARGET
+
+We get a few open ports: 22, 80, and 445. The latter two are both implementations of Apache and just give us the default page.
+
+At this point, the goal in my head is to find some credentials and pop them into SSH. Let's run a directory enumeration on the HTTP server:
+
+gobuster dir -w /usr/share/wordlists/dirb/big.txt -u $TARGET
+
+A few interesting things pop up: /admin, /passwd, and /shadow.
+
+Heading to /passwd or /shadow in our browser gives us a simple base64 string, the same one on each page.
+
+Decoding it, we get the following string: not this easy :D
+
+Cheeky. Let's check out /admin. There's a link to a parent directory, which is just the default page. There's also an id_rsa. Definitely grabbing that.
+
+When we open the id_rsa, though, it doesn't look like a regular rsa... in fact, it looks like more base64:
+
+Trust me it is not this easy..now get back to enumeration :D
+
+I can't believe you've done this. <This is where I left off; will come back to it later.>
