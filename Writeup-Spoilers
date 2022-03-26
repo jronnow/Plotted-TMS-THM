@@ -24,4 +24,18 @@ When we open the id_rsa, though, it doesn't look like a regular rsa... in fact, 
 
 Trust me it is not this easy..now get back to enumeration :D
 
-I can't believe you've done this. <This is where I left off; will come back to it later.>
+I can't believe you've done this.
+
+Alright, maybe we need to go up a level. After all, there are two Apache servers, and we've only been enumerating the directories on port 80 so far.
+
+gobuster dir -u [machine IP]:445 -w /usr/share/wordlists/dirb/big.txt
+
+Aaaand I forgot to set the -t flag to 64 so this wouldn't take half an hour. Oh well, nothing to do now but wait...
+
+Oh? Is that a /management directory on port 445's server? Let's just pop over to our browser and take a look-see.
+
+We're greeted with a login page. I tried a couple different SQLi techniques; here's the one that worked for me:
+
+1' or '1'='1';-- -
+
+And now we've got a Traffic Offense Management admin dashboard. <TBC>
